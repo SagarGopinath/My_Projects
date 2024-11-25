@@ -1,0 +1,38 @@
+{% extends "home.html" %}
+{% block title %}Register{% endblock %}
+{% block content %}
+
+<style>
+    body {
+        background-color: #D9DAD9;
+        font-family: Arial, sans-serif;
+    }
+
+    h1 {
+        text-align: center;
+        color:black; 
+        margin-top: 20px; 
+    }
+
+    form {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.8); 
+    }
+
+    .btn-primary {
+        width: 100%;
+
+    }
+</style>
+<h1>Register</h1>
+
+<form method = "POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary">Register</button>
+
+{% endblock %}

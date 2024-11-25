@@ -1,0 +1,81 @@
+{% extends "home.html" %}
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background-color: lightcyan;
+        font-family: Arial, sans-serif;
+    }
+
+    h1 {
+        text-align: center;
+        color: black;
+    }
+
+    .post-info {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .edit-delete-links {
+        display: inline-block;
+        margin: 0 10px;
+    }
+
+    p {
+        font-size: 16px;
+        line-height: 1.5;
+        color:  #D0944D;
+        padding: 15px; 
+        border-radius: 5px; 
+        background-color: lightcyan; 
+        max-width: 600px; 
+        margin: 20px auto; 
+    }
+
+    button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 15px;
+        cursor: pointer;
+    }
+
+</style>
+
+<h1>{{ post.title }}</h1>
+<div class="post-info">
+    <strong>Author: {{ post.author}} </strong>
+    {% if user.is_authenticated %}
+        {% if user.id == post.author.id %}
+            <span class="edit-delete-links">
+                <a href="{% url 'update' post.pk %}">Edit</a>
+                <a href="{% url 'delete' post.pk %}">Delete</a>
+            </span>
+        {% endif %}    
+    {% endif %}
+</div>
+<p><b>{{ post.body|safe }}</b></p>
+
+<small><b>Comments:</b></small>
+<ul>
+    {% for comment in comments %}
+        <li>
+            <strong>{{ comment.author}}:</strong> 
+            {{ comment.text }} - <em>{{ comment.created_date }}</em>
+        </li>
+    {% empty %}
+        <li>No comments yet. Be the first to comment!</li>
+    {% endfor %}
+</ul>
+<br/>
+<small><b>Add a comment:</b></small>
+<form method="post">
+    {% csrf_token %}
+    {{ comment_form.as_p }}
+    <button type="submit">Post Comment</button>
+</form>
+
+{% endblock %}
