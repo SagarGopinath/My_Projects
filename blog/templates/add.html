@@ -1,0 +1,64 @@
+{% extends "home.html" %}
+{% block title %}Add Post{% endblock %}
+{% block content %}
+<style>
+    body {
+        background-color: lightcyan;
+        font-family: Arial, sans-serif;
+    }
+
+    h1 {
+        text-align: center;
+        color: black;
+    }
+
+    .post-info {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .edit-delete-links {
+        display: inline-block;
+        margin: 0 10px;
+    }
+
+    p {
+        font-size: 16px;
+        line-height: 1.5;
+        color:  #D0944D;
+        padding: 15px; 
+        border-radius: 5px; 
+        background-color: lightcyan; 
+        max-width: 600px; 
+        margin: 20px auto; 
+    }
+
+    button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 15px;
+        cursor: pointer;
+    }
+    .btn-secondary:hover{
+        background-color : blue;
+    }
+</style>
+{% if user.is_authenticated %}
+    <h1>Add Post</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-secondary">Post</button>
+    </form>
+
+    <script>
+        var name = "{{ user.id }}"
+        document.getElementById("id_author").value = name
+    </script>
+{% else %}
+You're not logged in. Please <a href="{% url 'login' %}">login</a> or <a href="{% url 'register' %}">register</a> first.
+{% endif %}
+{% endblock %}

@@ -1,0 +1,108 @@
+{% extends "home.html" %}
+{% block title %} Blog {% endblock %}
+
+{% block content %}
+<style>
+body {
+
+    font-family: Arial, sans-serif;
+    background-color:wheat; 
+    color: #141619; 
+    margin: 0;
+    padding: 0;
+}
+
+.h1 {
+    text-align: center;
+    color: brown; 
+    margin-top: 20px;
+    size: 200px;
+}
+.filter-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+    background-color: rgba(165, 42, 42, 0.466); 
+    padding: 20px;
+    border-radius: 8px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    gap: 8px;
+}
+
+.filter-form label {
+    margin: 0 10px; 
+    color: brown; 
+}
+
+.filter-form input[type="date"] {
+    border: 1px solid #00246B; 
+    border-radius: 4px; 
+    padding: 5px;
+    margin: 0 10px; 
+}
+
+.filter-form button {
+    background-color: #00246B; 
+    color: #CADCFC;
+    border: none; 
+    border-radius: 4px; 
+    height: 30px;
+    align-content: center; 
+    cursor: pointer; 
+    text-align: center;
+    transition: background-color 1.0s; 
+}
+
+.filter-form button:hover {
+    background-color: whitesmoke;
+    color: black;
+}
+ 
+ul {
+    margin: 20px auto; 
+}
+
+.list {
+    background-color: #cadcfc8c; 
+    margin: 10px 0; 
+    padding: 15px; 
+    border-radius: 8px; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+    transition: transform 0.3s; 
+}
+
+
+
+</style>
+
+<div class="h1">
+    Posts
+</div>
+
+<form method="get" class="filter-form">
+    <label for="start_date"><b>Start Date:</b></label>
+    {{ form.start_date }}
+
+    <label for="end_date"><b>End Date:</b></label>
+    {{ form.end_date }}
+
+    <button type="submit" class="btn btn-primary">Filter</button>
+</form>
+
+<ul>
+    {% for post in object_list %}
+        <li>
+            <div class="list">
+            <a href="{% url 'article' post.pk %}">{{ post.title }}</a> - 
+            {{ post.author}}<br/>
+            {{ post.body|truncatewords:30 }}
+            </div>  
+        </li>
+    
+    {% empty %}
+        <li>No posts found for the selected date range.</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
